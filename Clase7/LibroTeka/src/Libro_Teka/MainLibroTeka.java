@@ -5,30 +5,38 @@ public class MainLibroTeka {
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 
-		String claveBusquedaUsuario="batman"; //meterianos una clase escaner hard code baby
-		
-		
-		//comienza la busqueda / instanciar el objeto buscador y ejecutar el metodo
-		Buscador nuevaBusqueda = new Buscador(claveBusquedaUsuario); //correctamente
-		//nuevaBusqueda.claveBusqueda=claveBusquedaUsuario;//hardcode
-		
-		
-		nuevaBusqueda.buscar(); //F· para ir al metodo
-		
-		
-		//verificar que tenga resultados
-		if(nuevaBusqueda.cantidadResultados >0) {
-			//mostrar los resultados
-			// foreach para cada TIPO de elemento que quiero mostrar
-			for (String articuloMostrar : nuevaBusqueda.articulos) {
-				System.out.println(articuloMostrar);
+		String claveBusquedaUsuario = "batman"; // meterianos una clase escaner hard code baby
+
+		// comienza la busqueda / instanciar el objeto buscador y ejecutar el metodo
+		Buscador nuevaBusqueda = new Buscador(claveBusquedaUsuario); // correctamente
+		// nuevaBusqueda.claveBusqueda=claveBusquedaUsuario;//hardcode
+
+		nuevaBusqueda.buscar(); // F3 para ir al metodo
+
+		// mostrar cantida
+		nuevaBusqueda.mostrarCantidadResultados();
+
+		// verificar que tenga resultados
+		if (nuevaBusqueda.hayResultados()) {
+			// alt+shift+m extraer un metodo
+			nuevaBusqueda.detalle();
+		}
+
+		// agregamos los articulos impares al carrito
+		// para eros creo 1 carrito primero
+
+		Carrito carrito = new Carrito();
+
+		if (nuevaBusqueda.hayResultados()) {
+			for (int i = 0; i < nuevaBusqueda.articulos.length; i++) {
+				if (i % 2 != 0) {
+					carrito.agregarAlCarrito(nuevaBusqueda.articulos[i]);    
+				}
 			}
-			for (int i = 0; i < nuevaBusqueda.cantidadResultados; i++) {
-				System.out.println(nuevaBusqueda.articulos[i]);
-			}
-			
 		}
 		
+		
+
 	}
 
 }
