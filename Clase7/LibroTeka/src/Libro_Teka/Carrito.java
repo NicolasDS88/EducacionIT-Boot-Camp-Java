@@ -60,12 +60,12 @@ public class Carrito {
 
 	// a completar: crear una lista nueva sin el elemento pasado por parametro
 
-	void copiarItems(Item noCopiar) {
+	void copiarItems(Item borrar) {
 		Item[] nuevaLista = new Item[this.items.length - 1];
 
 		for (Item item : this.items) {
 			int i = 0;
-			if (!item.equals(noCopiar)) {
+			if (!item.equals(borrar)) {
 				nuevaLista[i] = item;
 				i++;
 			}
