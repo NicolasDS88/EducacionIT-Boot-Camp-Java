@@ -28,6 +28,7 @@ public class Buscador {
 		resultados[0]= "Batman 1970";
 		resultados[1]= "Batman 1980";
 		resultados[2]= "Batman 1990";
+		articulos=resultados; //apunto a la direccion de memoria de resultados
 		cantidadResultados = resultados.length;
 	}
 	

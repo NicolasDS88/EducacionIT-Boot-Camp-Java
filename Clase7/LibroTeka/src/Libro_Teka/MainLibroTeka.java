@@ -13,7 +13,7 @@ public class MainLibroTeka {
 		//nuevaBusqueda.claveBusqueda=claveBusquedaUsuario;//hardcode
 		
 		
-		nuevaBusqueda.buscar();
+		nuevaBusqueda.buscar(); //F· para ir al metodo
 		
 		
 		//verificar que tenga resultados
