@@ -38,8 +38,9 @@ public class MainLibroTeka {
 				
 		
 		carrito.detalle();
-		//carrito.eliminarItem(Articulo.);
-		
+		carrito.eliminarItem(carrito.items[0]);
+		carrito.actualizar(carrito.items);
+		carrito.detalle();
 
 	}
 
