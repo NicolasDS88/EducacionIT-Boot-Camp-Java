@@ -29,12 +29,16 @@ public class MainLibroTeka {
 
 		if (nuevaBusqueda.hayResultados()) {
 			for (int i = 0; i < nuevaBusqueda.articulos.length; i++) {
-				if (i % 2 != 0) {
+				//if (i % 2 != 0) {
+					System.out.println("Se agrego '"+ nuevaBusqueda.articulos[i].nombre+ "' al carrito");
 					carrito.agregarAlCarrito(nuevaBusqueda.articulos[i]);    
-				}
+				//}
 			}
 		}
+				
 		
+		carrito.detalle();
+		//carrito.eliminarItem(Articulo.);
 		
 
 	}
