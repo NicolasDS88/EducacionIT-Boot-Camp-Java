@@ -18,7 +18,7 @@ public class MainCircus {
 		muchosMonos[2]=tresMono;
 		
 		//jaulaAnimales[0]=muchosMonos; //como hago?
-		
+		//jaulaAnimales[0]= {unMono};
 
 	}
 
