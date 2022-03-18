@@ -6,6 +6,12 @@ public class MainCircus {
 		
 		Mono[] muchosMonos = new Mono[3];
 		JaulaAnimal[] jaulaAnimales=new JaulaAnimal[5]; //unMono.nombre() //unMono.suJaula()
+		abstractAnimal[] abstractAnimal = new Mono[3];
+		abstractAnimal[] abstractAnimal2 = new abstractAnimal[3];
+		
+		JaulaAnimal[] jaulaAnimales2=new abstractAnimal[5]; //unMono.nombre() //unMono.suJaula()
+		
+		
 		
 		
 		
@@ -17,9 +23,16 @@ public class MainCircus {
 		muchosMonos[1]=dosMono;
 		muchosMonos[2]=tresMono;
 		
+		abstractAnimal[0]=muchosMonos[0];
+		jaulaAnimales[0]=abstractAnimal[0];
+		
 		//jaulaAnimales[0]=muchosMonos; //como hago?
 		//jaulaAnimales[0]= {unMono};
 
+		
+		
+		
+		
 	}
 
 }
