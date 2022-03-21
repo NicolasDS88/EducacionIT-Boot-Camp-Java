@@ -10,7 +10,7 @@ public class MainSemana3 {
 		EscuelaXYZ escuelaPublicaXYZ = new EscuelaXYZ(); // cuando la creo llama al constructor
 		
 		
-		
+		escuelaPublicaXYZ.agregarAlumnos();
 	}
 
 }

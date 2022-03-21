@@ -7,8 +7,8 @@ public class EscuelaXYZ {
 
 	// constructor
 	public EscuelaXYZ() {
-		tamañoLista = pedirTamanioLista();
-		crearListaAlumnos(tamañoLista);
+		
+		crearListaAlumnos(listaAlumnos());
 	}
 
 	// metodos
@@ -32,20 +32,21 @@ public class EscuelaXYZ {
 	}
 
 	void agregarAlumnos(){
-		if (this.tamañoLista>0) {
+		if (this.listaAlumnos.length>0) {
 			System.out.println("Agregando alumnos en la lista...");//puedo agregar alumnos
 			Scanner pidoAlumno = new Scanner(System.in);
-			for (int i = 0; i < tamañoLista; i++) {
-				System.out.println("Ingrese NOMBRE del "+i+1+"º alumno");
-				String nombre=pidoAlumno.next();
-				System.out.println("Ingrese APELLIDO del "+i+1+"º alumno");
-				String apellido=pidoAlumno.next();
-				System.out.println("Ingrese ID del EXAMEN del "+i+1+"º alumno");
+			for (int i = 0; i < this.listaAlumnos.length; i++) {
+				System.out.println("Ingrese NOMBRE del "+(i+1)+"º alumno");
+				String nombre=pidoAlumno.nextLine();
+				System.out.println("Ingrese APELLIDO del "+(i+1)+"º alumno");
+				String apellido=pidoAlumno.nextLine();
+				System.out.println("Ingrese ID del EXAMEN del "+(i+1)+"º alumno");
 				long idExamen=pidoAlumno.nextLong(); //pongo long por que nose como maneja los ID, quizas es muy grande
-				System.out.println("Ingrese la NOTA del "+i+1+"º alumno");
+				
 				byte nota;
-				do{nota=pidoAlumno.nextByte();}
-				while (nota>=0&&nota<=10);// se que va del 0 al 10
+				do{System.out.println("Ingrese la NOTA del "+(i+1)+"º alumno");
+					nota=pidoAlumno.nextByte();}
+				while (((nota>-1)&&(nota<11)));// se que va del 0 al 10
 				
 				listaAlumnos[i]=new Alumno(nombre, apellido, idExamen, nota);
 			}
