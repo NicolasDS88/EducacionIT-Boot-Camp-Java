@@ -11,6 +11,9 @@ public class MainSemana3 {
 		
 		
 		escuelaPublicaXYZ.agregarAlumnos();
+		
+		escuelaPublicaXYZ.imprimirAlumnosNotaMax();
+		
 	}
 
 }
