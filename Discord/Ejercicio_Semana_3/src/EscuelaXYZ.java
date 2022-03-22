@@ -43,20 +43,21 @@ public class EscuelaXYZ {
 
 	void cargarDatosAlumno() {
 		System.out.println("Agregando alumnos en la lista...");// puedo agregar alumnos
-		Scanner pidoAlumno = new Scanner(System.in);
+		Scanner stringScanner = new Scanner(System.in);
+		Scanner intScanner = new Scanner(System.in);
 		for (int i = 0; i < this.listaAlumnos.length; i++) {
 			mensajePedirDatos(i, "Ingrese NOMBRE del ");
-			String nombre = pidoAlumno.nextLine();
+			String nombre = stringScanner.nextLine();
 			mensajePedirDatos(i, "Ingrese APELLIDO del ");
-			String apellido = pidoAlumno.nextLine();
+			String apellido = stringScanner.nextLine();
 			mensajePedirDatos(i, "Ingrese ID del EXAMEN del ");
-			long idExamen = pidoAlumno.nextLong(); // pongo long por que nose como maneja los ID, quizas es muy
+			long idExamen = intScanner.nextLong(); // pongo long por que nose como maneja los ID, quizas es muy
 													// grande
 			byte nota = -1;
 			mensajePedirDatos(i, "Ingrese la NOTA del alumno ");
 			do {
 				System.out.println("La nota debe ser entre 0 y 10");
-				nota = pidoAlumno.nextByte();
+				nota = intScanner.nextByte();
 			} while ((nota < 0) || (nota > 10));
 			// despues de pedir lo agrego a la lista
 			listaAlumnos[i] = new Alumno(nombre, apellido, idExamen, nota);
@@ -75,9 +76,9 @@ public class EscuelaXYZ {
 		int notaMax = saberNotaMax();
 		int cantNotaMAx = cantNotaMaxRepetida();
 		int contador = 0;
-		Alumno[] listaNotaMax = new Alumno[cantNotaMAx];
+		Alumno[] listaNotaMax = new Alumno[1]; //PROBANCO ACA
 
-		if (cantNotaMAx > 0) {
+		if (cantNotaMAx >= 0) {
 			do { // si es menor sigo buscando
 				for (int i = 0; i < this.listaAlumnos.length; i++) {
 					if (listaAlumnos[i].nota == notaMax) {
