@@ -10,9 +10,12 @@ public class mainEscuela {
 		System.out.println("-------------------------------------");
 		escuelita.mostrarArray(escuelita.arrayAlumnos, "de todos es:");		
 		System.out.println("-------------------------------------");		
-		escuelita.mostrarArray(escuelita.arrayNotaMax,"Nota Max");
+		escuelita.mostrarArray(escuelita.arrayNotaMax,"del cuadro de honor");
 		System.out.println("-------------------------------------");
-		escuelita.mostrarArray(escuelita.arrayNotaMin,"Nota Min");
+		escuelita.mostrarArray(escuelita.arrayNotaMin,"los burros");
+		System.out.println("-------------------------------------");
+		escuelita.mostrarArray(escuelita.arrayAprobados,"Aprobados");
+		escuelita.mostrarArray(escuelita.arrayDesaprobados,"Desaprobados");
 		
 	}
 

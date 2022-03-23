@@ -7,6 +7,9 @@ public class EscuelaXYZ {
 	Alumno[] arrayAlumnos;
 	Alumno[] arrayNotaMin;
 	Alumno[] arrayNotaMax;
+	Alumno[] arrayAprobados;
+	Alumno[] arrayDesaprobados;
+	int notaAprobacion=7;
 
 	// Constructor vacio escuela invoca los metodos
 	EscuelaXYZ() {
@@ -47,11 +50,42 @@ public class EscuelaXYZ {
 		}
 		cargarArrayNotaMax();
 		cargarArrayNotaMin();
-		
+		//cargarUnArrayConMinOMax(arrayNotaMax, true); // le paso el array donde buscarlo
+		//cargarUnArrayConMinOMax(arrayNotaMin, false);
+		cargarAprobadosyDesaprobados();
+
 		string.close();
 		inter.close();
-		
 
+	}
+
+	public void cargarAprobadosyDesaprobados() {
+		int sizeAprobados=contadorAprobados();
+		int sizeDesaprobados=arrayAlumnos.length-sizeAprobados;
+		arrayAprobados=new Alumno[sizeAprobados];
+		arrayDesaprobados=new Alumno[sizeDesaprobados];	
+		int auxAprobados=0;
+		int auxDesaprobados=0;
+		for (Alumno alumno : arrayAlumnos) {
+			if (alumno.getNota()>=notaAprobacion) {
+				arrayAprobados[auxAprobados]=alumno;
+				auxAprobados++;
+			}else {
+				arrayDesaprobados[auxDesaprobados]=alumno;
+				auxDesaprobados++;				
+			}			
+		}					
+	}
+	
+	public int contadorAprobados() {
+		int contador=0;
+		for (Alumno alumno : arrayAlumnos) {
+			if (alumno.getNota()>=notaAprobacion) {
+				contador++;
+			}
+		}
+		return contador;
+		
 	}
 
 	private String pedirNombreApellido(String queVoyAPedir, int numeroAlumno, Scanner string) {
@@ -101,9 +135,51 @@ public class EscuelaXYZ {
 			arrayNotaMax = new Alumno[0]; // lo creo vacio
 		}
 	}
-	//proximo paso hacer 1 solo metodo que segun el parametro que le mando bnsuca la nota
-	//tendria que pasarle a que array agregarlo y la notamin o max
-	void cargarArrayNotaMin() { 
+
+	void cargarUnArrayConMinOMax(Alumno[]unarray, boolean MaxOMin) { //si es por el true bsuca el max biceversa
+		if (arrayAlumnos.length > 0) {
+			if (MaxOMin) {
+				int nota = notaBuscar(MaxOMin); // para comparar
+				int tamanioNuevoArray = contadorDeNotaRepetida(MaxOMin); // para definir tamaño
+				int aux = 0;
+				if (tamanioNuevoArray > 0) { // hay alumnos cargados
+					unarray = new Alumno[tamanioNuevoArray];
+					for (Alumno alumno : arrayAlumnos) {
+						if (alumno.getNota() == nota) {
+							unarray[aux] = alumno;
+							aux++;
+						}
+					}
+				}
+			} else {
+				int nota = notaBuscar(MaxOMin); // para comparar
+				int tamanioNuevoArray = contadorDeNotaRepetida(MaxOMin); // para definir tamaño
+				int aux = 0;
+				if (tamanioNuevoArray > 0) { // hay alumnos cargados
+					unarray = new Alumno[tamanioNuevoArray];
+					for (Alumno alumno : arrayAlumnos) {
+						if (alumno.getNota() == nota) {
+							unarray[aux] = alumno;
+							aux++;
+
+						}
+					}
+				}
+			}
+		} else {
+			unarray = new Alumno[0]; // lo creo vacio para que no explote
+		}
+	}
+
+	// proximo paso hacer 1 solo metodo que segun el parametro que le mando bnsuca
+	// la nota
+	// tendria que pasarle a que array agregarlo y la notamin o max
+	// FALTA HACER 3- alumnos que promocionan, aquellos que obtuvieron un promedio
+	// >= 7
+	// 4- alumnos que deben recursar la materia, aquellos que obtuvieron un promedio
+	// < 7"
+
+	void cargarArrayNotaMin() {
 		int notaMin = buscarNotaMin(); // para comparar
 		int tamañoNuevoArray = cantNotaMinRepetida(); // para definir tamaño
 		int aux = 0;
@@ -119,11 +195,9 @@ public class EscuelaXYZ {
 			arrayNotaMin = new Alumno[0]; // lo creo vacio
 		}
 	}
-	
-	
 
 	public void mostrarArray(Alumno[] mostrar, String mensajeTitulo) {
-		if (mostrar.length>0) {
+		if ((mostrar != null) && (mostrar.length > 0)) { // si pongo el null despeus caga todo
 			System.out.println("La lista con alumnos que tienen la nota " + mensajeTitulo);
 			for (Alumno alumno : mostrar) {
 				System.out.println(alumno.toString());
@@ -134,9 +208,34 @@ public class EscuelaXYZ {
 
 	}
 
+	public int notaBuscar(boolean MaxOMin) {// por true busca el mas alto y biceversa
+		int notaDevolver = 0;
+		if ((arrayAlumnos.length) > 0) {
+			if (MaxOMin) { // true busca nota mas alta
+
+				for (Alumno alumno : arrayAlumnos) {
+					if (alumno.getNota() > notaDevolver) {
+						notaDevolver = alumno.getNota();
+					}
+				}
+
+			} else {// false busca la nota mas baja
+				notaDevolver = 11;
+				for (Alumno alumno : arrayAlumnos) {
+					if (alumno.getNota() < notaDevolver) {
+						notaDevolver = alumno.getNota();
+					}
+				}
+
+			}
+		}
+		return notaDevolver;
+
+	}
+
 	public int buscarNotaMax() {
 		int notaMax = 0;
-		if ((arrayAlumnos.length)>0) {
+		if ((arrayAlumnos.length) > 0) {
 			for (Alumno alumno : arrayAlumnos) {
 				if (alumno.getNota() > notaMax) {
 					notaMax = alumno.getNota();
@@ -145,6 +244,40 @@ public class EscuelaXYZ {
 
 		}
 		return notaMax;
+	}
+
+	public int buscarNotaMin() {
+		int notaMin = 11;
+		if (arrayAlumnos.length > 0) {
+			for (Alumno alumno : arrayAlumnos) {
+				if (alumno.getNota() < notaMin) {
+					notaMin = alumno.getNota();
+				}
+			}
+		}
+		return notaMin;
+	}
+
+	public int contadorDeNotaRepetida(boolean MaxOMin) {
+		int notaRepetida = 0;
+		if (MaxOMin) {// entra por el true
+			int notaMAx = notaBuscar(MaxOMin);
+			for (Alumno alumno : arrayAlumnos) {
+				if (alumno.getNota() == notaMAx) {
+					notaRepetida++;
+				}
+			}
+		} else {
+			int notaMin = notaBuscar(MaxOMin);
+			for (Alumno alumno : arrayAlumnos) {
+				if (alumno.getNota() == notaMin) {
+					notaRepetida++;
+				}
+			}
+
+		}
+
+		return notaRepetida;
 	}
 
 	int cantNotaMaxRepetida() {
@@ -158,18 +291,6 @@ public class EscuelaXYZ {
 		return notaMaxRepe;
 	}
 
-	public int buscarNotaMin() {
-		int notaMin = 11;
-		if (arrayAlumnos.length>0) {
-			for (Alumno alumno : arrayAlumnos) {
-				if (alumno.getNota()<notaMin) {
-					notaMin = alumno.getNota();
-				}
-			}
-		}
-		return notaMin;
-	}
-	
 	int cantNotaMinRepetida() {
 		int notaMinRepe = 0; // pongo 1 por que una nota va a devolver.
 		int notaMin = buscarNotaMin();
@@ -180,7 +301,5 @@ public class EscuelaXYZ {
 		}
 		return notaMinRepe;
 	}
-	
-	
 
 }
