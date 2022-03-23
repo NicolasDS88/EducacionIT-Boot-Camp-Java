@@ -29,7 +29,7 @@ public class Alumno {
 
 
 	//constructor 
-	public Alumno(String nombre, String apellido, String idExamen, byte nota) {		
+	public Alumno(String nombre, String apellido, String idExamen, int nota) {		
 		this.nombre = nombre;
 		this.apellido = apellido;
 		this.idExamen = idExamen;

@@ -7,7 +7,13 @@ public class mainEscuela {
 
 		EscuelaXYZ escuelita=new EscuelaXYZ();
 		
-		escuelita.mostrarArray(escuelita.arrayAlumnosNotaMax(), "Nota Max");
+		System.out.println("-------------------------------------");
+		escuelita.mostrarArray(escuelita.arrayAlumnos, "de todos es:");		
+		System.out.println("-------------------------------------");		
+		escuelita.mostrarArray(escuelita.arrayNotaMax,"Nota Max");
+		System.out.println("-------------------------------------");
+		escuelita.mostrarArray(escuelita.arrayNotaMin,"Nota Min");
+		
 	}
 
 }
