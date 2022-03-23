@@ -7,16 +7,19 @@ public class mainEscuela {
 
 		EscuelaXYZ escuelita=new EscuelaXYZ();
 		
-		System.out.println("----------------------------------------------");
-		escuelita.mostrarArray(escuelita.arrayAlumnos, "de todos es:");		
-		System.out.println("----------------------------------------------");		
-		escuelita.mostrarArray(escuelita.arrayNotaMax,"del cuadro de honor");
-		System.out.println("----------------------------------------------");
-		escuelita.mostrarArray(escuelita.arrayNotaMin,"los burros");
-		System.out.println("----------------------------------------------");
-		escuelita.mostrarArray(escuelita.arrayAprobados,"Aprobados");
-		System.out.println("----------------------------------------------");
-		escuelita.mostrarArray(escuelita.arrayDesaprobados,"Desaprobados");
+		if (escuelita.arrayAlumnos.length>0) {
+			System.out.println("----------------------------------------------");
+			escuelita.mostrarArray(escuelita.arrayAlumnos, "de todos es:");		
+			System.out.println("----------------------------------------------");		
+			escuelita.mostrarArray(escuelita.arrayNotaMax,"del cuadro de honor");
+			System.out.println("----------------------------------------------");
+			escuelita.mostrarArray(escuelita.arrayNotaMin,"los burros");
+			System.out.println("----------------------------------------------");
+			escuelita.mostrarArray(escuelita.arrayAprobados,"Aprobados");
+			System.out.println("----------------------------------------------");
+			escuelita.mostrarArray(escuelita.arrayDesaprobados,"Desaprobados");
+			
+		}
 		
 	}
 
