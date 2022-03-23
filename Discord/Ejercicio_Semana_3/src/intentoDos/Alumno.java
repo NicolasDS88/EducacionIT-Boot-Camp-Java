@@ -39,7 +39,7 @@ public class Alumno {
 
 	@Override
 	public String toString() {
-		return "Alumno: Nombre=" + nombre + ", Apellido=" + apellido +  ", nota=" + nota;
+		return "Alumno: Nombre= " + nombre.toUpperCase() + ", Apellido= " + apellido.toUpperCase() +  ", Nota Examen= " + nota;
 	}
 
 	

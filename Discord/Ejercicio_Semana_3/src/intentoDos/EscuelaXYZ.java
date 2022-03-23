@@ -92,7 +92,7 @@ public class EscuelaXYZ {
 		String texto = "";
 		System.out.println("Por favor ingrese el " + queVoyAPedir + " del " + (numeroAlumno + 1) + "º estudiante:");
 		if (string.hasNextLine()) {
-			texto = string.next();
+			texto = string.nextLine();
 		}
 		return texto;
 	}
