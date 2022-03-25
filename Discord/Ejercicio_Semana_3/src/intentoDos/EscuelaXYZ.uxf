@@ -1,0 +1,24 @@
+<diagram program="umletino" version="14.3.0"><zoom_level>10</zoom_level><element><id>UMLClass</id><coordinates><x>40</x><y>90</y><w>210</w><h>190</h></coordinates><panel_attributes>&lt;EscuelaXYZ&gt;
+--
+-Alumnos[]:Alumno
+
+--
+notasMasAltas(): Alumnos[]
+notasMasBajas(): Alumnos[]
+alumnosPromocionados():Alumnos[]
+alumnosRecursantes():Alumnos[]
+
+
+
+--
+</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>460</x><y>100</y><w>210</w><h>190</h></coordinates><panel_attributes>&lt;Alumnos&gt;
+--
+ - nombre: String
+ - apellido: String
+ - IdExamen: Long
+ - nota (numérico &gt;=0 &lt;=10): Byte
+--
+Alumnos(nom,ape,id,nota)
+
+--</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>240</x><y>170</y><w>240</w><h>40</h></coordinates><panel_attributes>lt=&lt;-
+0...n</panel_attributes><additional_attributes>220;20;10;20</additional_attributes></element></diagram>
