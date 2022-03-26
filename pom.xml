@@ -6,6 +6,12 @@
   <packaging>pom</packaging>
   <name>modulo padre del bootcamp</name>
   <description>primer modulo de todo bootcamp en maven</description>
+  <!-- defino variable -->
+	<properties>
+		<maven.compiler.source>11</maven.compiler.source>
+		<maven.compiler.target>11</maven.compiler.target>
+	</properties>
+
   <modules>
   	<module>app-web</module>
   </modules>
