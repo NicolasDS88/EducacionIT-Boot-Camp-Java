@@ -1,4 +1,4 @@
-package clase10;
+package java.clase10;
 
 public class Animal {
 
