@@ -1,4 +1,0 @@
-INDEX VERSION 1.131+N:\EducacionIT\Clase 5\.metadata\.plugins\org.eclipse.jdt.core
-1865797976.index
-916027634.index
-2502575321.index

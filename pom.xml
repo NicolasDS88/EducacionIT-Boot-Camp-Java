@@ -1,18 +1,24 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
-  <modelVersion>4.0.0</modelVersion>
-  <groupId>ar.com.educacionit</groupId>
-  <artifactId>app-parent</artifactId>
-  <version>1.0.0-SNAPSHOT</version>
-  <packaging>jar</packaging>
-  <name>modulo padre del bootcamp</name>
-  <description>primer modulo de todo bootcamp en maven</description>
-  <!-- defino variable -->
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>ar.com.educacionit</groupId>
+	<artifactId>app-parent</artifactId>
+	<version>1.0.0-SNAPSHOT</version>
+	<packaging>pom</packaging>
+	<name>modulo padre del bootcamp</name>
+	<description>primer modulo de todo el bootcamp</description>
+	
+	<!-- defino variable -->
 	<properties>
 		<maven.compiler.source>11</maven.compiler.source>
 		<maven.compiler.target>11</maven.compiler.target>
 	</properties>
-
-  <modules>
-  	<module>app-web</module>
-  </modules>
+	
+	<modules>
+		<module>app-web</module>
+		<module>app-services</module>
+		<module>app-daos</module>
+		<module>app-domain</module>
+	</modules>
 </project>
