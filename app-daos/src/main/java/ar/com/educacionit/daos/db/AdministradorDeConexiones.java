@@ -9,6 +9,7 @@ import ar.com.educacionit.daos.db.exceptions.GenericException;
 public class AdministradorDeConexiones {
 
 	public static Connection obtenerConexion() throws GenericException {
+		//Estas van a ser variables de entorno para no hardcodear
 		String host = "localhost";
 		String user = "root";
 		String password = "root";

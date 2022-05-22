@@ -1,6 +1,6 @@
 package ar.com.educacionit.daos;
 
-//import ar.com.educacionit.domain.Categorias;
+import ar.com.educacionit.domain.Categorias;
 
 public interface CategoriasDao extends GenericDao<Categorias>{
 

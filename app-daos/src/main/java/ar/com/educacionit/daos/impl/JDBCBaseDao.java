@@ -1,19 +1,23 @@
 package ar.com.educacionit.daos.impl;
 
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.SQLIntegrityConstraintViolationException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
 import ar.com.educacionit.daos.GenericDao;
 import ar.com.educacionit.daos.db.AdministradorDeConexiones;
+import ar.com.educacionit.daos.db.exceptions.DuplicatedException;
 import ar.com.educacionit.daos.db.exceptions.GenericException;
+import ar.com.educacionit.domain.Entity;
 
-public abstract class JDBCBaseDao<T> implements GenericDao<T>{
+public abstract class JDBCBaseDao<T extends Entity> implements GenericDao<T>{
 
-	protected String tabla;
+	protected String tabla; //cuando creo uno de los hijos le tengo que pasar el nombre de su tabla
 	
 	public JDBCBaseDao(String tabla) {
 		if(tabla == null) {
@@ -22,11 +26,76 @@ public abstract class JDBCBaseDao<T> implements GenericDao<T>{
 		this.tabla = tabla;
 	}
 	
+	//cada impl debe especificar como es su sql insert
+	public abstract String getSaveSQL();
+	public abstract void saveData(T entity,PreparedStatement pst) throws SQLException;	
+	public abstract String getUpdateSQL(T entity);
+	public abstract void updateData(T entity, PreparedStatement st) throws SQLException;
+
+	public void update(T entity) throws GenericException {		
+		String sql = "UPDATE " + this.tabla + " SET " +this.getUpdateSQL(entity) + " where id=?";		
+		//contar cuantos ?
+		int idx = getWhereIndex(sql);//en este ejemplo idx = 7
+		try (Connection con2 = AdministradorDeConexiones.obtenerConexion()) {
+			try (PreparedStatement st = con2.prepareStatement(sql.toString())) {
+				// puedo setear atributo=valor con el tipo correcto				
+				this.updateData(entity, st); //llama al metodo del hijo
+				st.setLong(idx, entity.getId()); //LE ASIGNO A LA ULTIMA POSICION de "?"-> where id=? <- ultimo "?"
+				st.execute();// alt+shift+m 
+			}
+		} catch (GenericException ge) {
+			throw new GenericException(ge.getMessage(), ge);
+		} catch (SQLException se) {
+			throw new GenericException(se.getMessage(), se);
+		}
+	}
+
+	/*
+	 * Determina el indice del where ID en un update
+	 */
+	private int getWhereIndex(String sql) {
+		int idx = 0;
+		for(char c : sql.toString().toCharArray()) {
+			if(c == '?') {
+				idx ++;
+			}
+		}
+		return idx;
+	}
+	
+	public void save(T entity) throws DuplicatedException, GenericException {		
+		try(Connection con2 = AdministradorDeConexiones.obtenerConexion()) {			
+			StringBuffer sql = new StringBuffer("INSERT INTO ").append(this.tabla).append(this.getSaveSQL());
+			StringBuffer sql2 = new StringBuffer("INSERT INTO ").append(this.tabla).append(this.getSaveSQL2(entity));			
+			try(PreparedStatement st = con2.prepareStatement(sql.toString(),PreparedStatement.RETURN_GENERATED_KEYS)) {				
+				this.saveData(entity, st);				
+				st.execute();				
+				try(ResultSet rs = st.getGeneratedKeys()){					
+					if(rs.next()) {						
+						Long id = rs.getLong(1);						
+						entity.setId(id);
+					}
+				}
+			}			
+		}catch(SQLException se) {
+			if(se instanceof SQLIntegrityConstraintViolationException) {
+				throw new DuplicatedException("No se ha podido insertar el articulo, integridad de datos violada",se);
+			}
+			throw new GenericException(se.getMessage(), se);
+		}catch(GenericException ge) {
+			throw new GenericException(ge.getMessage(), ge);
+		}
+	}
+	
+	private Object getSaveSQL2(T entity) {
+		//armar la logica para el insert...
+		return null;
+	}
+
 	@Override
 	public T getByPK(Long id) throws GenericException {
 		try(Connection con2 = AdministradorDeConexiones.obtenerConexion()) {
-			try (Statement st = con2.createStatement()) {
-				
+			try (Statement st = con2.createStatement()) {				
 				String sql = "SELECT * FROM " + this.tabla + " WHERE ID = " + id; 
 				
 				try(ResultSet rs = st.executeQuery(sql)) { 
@@ -54,7 +123,7 @@ public abstract class JDBCBaseDao<T> implements GenericDao<T>{
 				ResultSet rs = st.executeQuery(sql);
 			) {
 			while(rs.next()) {
-				T entity = this.fromResultSetToEntity(rs);
+				T entity = this.fromResultSetToEntity(rs); //convierte del result al objeto invocado, ejemplo un articulo.
 				registros.add(entity);
 			}					
 		} catch (SQLException e) {
@@ -66,7 +135,7 @@ public abstract class JDBCBaseDao<T> implements GenericDao<T>{
 	@Override
 	public List<T> findPageable(Integer currentPage, Integer size) throws GenericException {
 		List<T> registros = new ArrayList<>();
-		String sql = "SELECT * FROM " + this.tabla + "LIMIT "+ size + " offset "+ (currentPage-1);
+		String sql = "SELECT * FROM " + this.tabla + " LIMIT "+ size + " offset "+ (currentPage-1);
 		try(
 				Connection con2 = AdministradorDeConexiones.obtenerConexion();
 				Statement st = con2.createStatement();
@@ -82,17 +151,21 @@ public abstract class JDBCBaseDao<T> implements GenericDao<T>{
 		return registros;
 	}
 	
+	//llama a la tabla del hijo.. ya sea articulo o categorias etc...
 	@Override
 	public void delete(Long id) throws GenericException {
 		String sql = "DELETE FROM " +this.tabla+ " WHERE ID = " + id;
 		try (
 				Connection con2 = AdministradorDeConexiones.obtenerConexion();
+				//auto commit en false -> hasta que no hagoi con2.commit() no se cierra si falla hago rollback
 				Statement st = con2.createStatement();
 		) {
-			st.executeUpdate(sql);
+			st.executeUpdate(sql); //hay que tener cuidado con el metodo q se usa dependiendo lo q haga
 		}catch(GenericException ge) {
+			//con2.rollback();
 			throw new GenericException(sql, ge);
 		}catch(SQLException se) {
+			//con2.rollback();
 			throw new GenericException(sql, se);
 		}
 	}

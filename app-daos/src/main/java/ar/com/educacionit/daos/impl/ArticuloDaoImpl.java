@@ -5,13 +5,15 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.Date;
+import java.util.List;
 
 import ar.com.educacionit.daos.ArticuloDao;
 import ar.com.educacionit.daos.db.AdministradorDeConexiones;
+import ar.com.educacionit.daos.db.exceptions.DuplicatedException;
 import ar.com.educacionit.daos.db.exceptions.GenericException;
 import ar.com.educacionit.domain.Articulo;
 
-public class ArticuloDaoImpl implements ArticuloDao {
+public class ArticuloDaoImpl  { //implements ArticuloDao
 
 	private Connection con;
 	
@@ -22,7 +24,7 @@ public class ArticuloDaoImpl implements ArticuloDao {
 			throw new IllegalArgumentException(e.getMessage(), e);
 		}
 	}
-	
+	/*
 	@Override
 	public Articulo save(Articulo Articulo) {// ctrl+f
 		
@@ -65,13 +67,51 @@ public class ArticuloDaoImpl implements ArticuloDao {
 	@Override
 	public Articulo update(Articulo ArticuloToUpdate) {
 		// TODO Auto-generated method stub
+				
 		return null;
 	}
 
 	@Override
 	public Articulo delete(Long id) {
 		// TODO Auto-generated method stub
+		String SQL = "delete from tabla where id = "+id;
 		return null;
 	}
 
+	@Override
+	public List<Articulo> findAll() throws GenericException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public void save(Articulo orden) throws GenericException, DuplicatedException {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void update(Articulo ordenToUpdate) throws GenericException {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void delete(Long pk) throws GenericException {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public List<Articulo> findPageable(Integer currentPage, Integer size) throws GenericException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Articulo getByCode(String codigo) throws GenericException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+*/
 }
