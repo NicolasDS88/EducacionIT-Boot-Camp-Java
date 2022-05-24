@@ -42,9 +42,9 @@ public abstract class JDBCBaseDao<T extends Entity> implements GenericDao<T>{
 			try {  
 		    	Field[] campos = entity.getClass().getDeclaredFields();
 		        sb.append("( ");
-		        for(Field f : campos){
-		        	f.setAccessible(true);
-		            String fName = f.getName();//tengo que agregar el "_" em la primera mayuscula		            
+		        for(int i = 1; i < campos.length; i++){ //comienza despues del 1º elemento ID		        	
+		        	campos[i].setAccessible(true);
+		            String fName = campos[i].getName();//tengo que agregar el "_" em la primera mayuscula		            
 		            fName=fName.replaceAll("(.)(\\p{Lu})", "$1_$2");
 		            //System.err.println(fName);
 		            sb.append(fName.toUpperCase() + ",");
@@ -52,7 +52,7 @@ public abstract class JDBCBaseDao<T extends Entity> implements GenericDao<T>{
 		        sb.deleteCharAt(sb.length()-1); //borra la ultima ","
 		        sb.append(") VALUES (");
 		        //agrego los "?" correspondiente a la cantidad de campos
-		        for (int i = 0; i < campos.length; i++) {
+		        for (int i = 1; i < campos.length; i++) { //comienza despues del 1º elemento ID
 		        	sb.append("?,");
 				}
 		        sb.deleteCharAt(sb.length()-1); //borra la ultima ","
