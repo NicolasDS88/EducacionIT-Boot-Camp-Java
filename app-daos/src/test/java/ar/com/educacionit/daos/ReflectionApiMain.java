@@ -4,6 +4,7 @@ import java.lang.reflect.Field;
 import java.util.Date;
 
 import ar.com.educacionit.daos.impl.ArticuloDaoMysqlImpl;
+import ar.com.educacionit.daos.impl.CategoriasDaoMysqlImpl;
 import ar.com.educacionit.domain.Articulo;
 import ar.com.educacionit.domain.Categorias;
 import ar.com.educacionit.domain.Orden;
@@ -17,8 +18,11 @@ public class ReflectionApiMain {
 		Orden ord = new Orden(1L, "o32123123", 150F);
 		
 		ArticuloDaoMysqlImpl art2 = new ArticuloDaoMysqlImpl();
+		CategoriasDaoMysqlImpl cat2 = new CategoriasDaoMysqlImpl();
 		
 		System.out.println(art2.getSaveSQL2(art));
+		
+		System.out.println(cat2.getSaveSQL2(cat));
 		
 	/*
 		mostrarAtributos(art);
