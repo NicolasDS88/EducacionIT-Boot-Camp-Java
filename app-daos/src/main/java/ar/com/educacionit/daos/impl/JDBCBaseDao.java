@@ -31,6 +31,7 @@ public abstract class JDBCBaseDao<T extends Entity> implements GenericDao<T>{
 	public abstract void saveData(T entity,PreparedStatement pst) throws SQLException;	
 	public abstract String getUpdateSQL(T entity);
 	public abstract void updateData(T entity, PreparedStatement st) throws SQLException;
+	public abstract String getSaveSQL2(T entity);
 
 	public void update(T entity) throws GenericException {		
 		String sql = "UPDATE " + this.tabla + " SET " +this.getUpdateSQL(entity) + " where id=?";		
@@ -87,10 +88,10 @@ public abstract class JDBCBaseDao<T extends Entity> implements GenericDao<T>{
 		}
 	}
 	
-	private Object getSaveSQL2(T entity) {
+	/*private Object getSaveSQL2(T entity) {
 		//armar la logica para el insert...
 		return null;
-	}
+	}*/
 
 	@Override
 	public T getByPK(Long id) throws GenericException {
@@ -123,7 +124,7 @@ public abstract class JDBCBaseDao<T extends Entity> implements GenericDao<T>{
 				ResultSet rs = st.executeQuery(sql);
 			) {
 			while(rs.next()) {
-				T entity = this.fromResultSetToEntity(rs); //convierte del result al objeto invocado, ejemplo un articulo.
+				T entity = this.fromResultSetToEntity(rs); //convierte del result al entity invocado, ejemplo un articulo.
 				registros.add(entity);
 			}					
 		} catch (SQLException e) {

@@ -1,10 +1,12 @@
 package ar.com.educacionit.daos.impl;
 
+import java.lang.reflect.Field;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Date;
+import java.util.Iterator;
 
 import ar.com.educacionit.daos.ArticuloDao;
 import ar.com.educacionit.daos.db.AdministradorDeConexiones;
@@ -17,12 +19,8 @@ public class ArticuloDaoMysqlImpl extends JDBCBaseDao<Articulo> implements Artic
 		super("articulos"); //aca le indico el nombre de la tabla
 	}
 
-	@Override
-	public String getSaveSQL() { // save = create
-		return "(TITULO,CODIGO, PRECIO, CATEGORIAS_ID, MARCAS_ID,FECHA_CREACION,STOCK) VALUES (?,?,?,?,?,?,?)";
-	}
 
-	@Override
+	@Override //mejorar usando reflection
 	public void saveData(Articulo entity, PreparedStatement st) throws SQLException {
 		st.setString(1, entity.getTitulo());
 		st.setString(2, entity.getCodigo());
@@ -33,7 +31,7 @@ public class ArticuloDaoMysqlImpl extends JDBCBaseDao<Articulo> implements Artic
 		st.setLong(7, entity.getStock());
 	}
 
-	@Override
+	@Override //es de la interfaz ArticuloDao
 	public Articulo getByCode(String codigo) throws GenericException {
 		try (Connection con2 = AdministradorDeConexiones.obtenerConexion()) {
 			String sql = "SELECT * FROM ARTICULOS WHERE codigo = ?";
@@ -90,7 +88,7 @@ public class ArticuloDaoMysqlImpl extends JDBCBaseDao<Articulo> implements Artic
 
 	}
 
-	@Override
+	@Override //arma la consulta
 	public String getUpdateSQL(Articulo entity) {
 		StringBuffer sql = new StringBuffer();
 
@@ -113,6 +111,39 @@ public class ArticuloDaoMysqlImpl extends JDBCBaseDao<Articulo> implements Artic
 			sql.append("categorias_id=?").append(",");
 		}
 
-		return sql.substring(0, sql.length() - 1).toString();
+		return sql.substring(0, sql.length() - 1).toString(); //saca la ultima coma y devuelve el sql
+	}
+
+	@Override
+	public String getSaveSQL() { // save = create
+		//TODO se puede hacer con JAVA REFLECTION
+		return "(TITULO, CODIGO, PRECIO, CATEGORIAS_ID, MARCAS_ID, FECHA_CREACION, STOCK) VALUES (?,?,?,?,?,?,?)";
+	}
+	
+	@Override
+	public String getSaveSQL2(Articulo entity) {		
+		StringBuilder sb = new StringBuilder();		
+	    Class<Articulo> thisClass = null;
+	    try {  
+	    	Field[] campos = thisClass.getDeclaredFields();
+	        sb.append("( ");
+	        for(Field f : campos){
+	            String fName = f.getName();//tengo que agregar el "_" em la primera mayuscula
+	            fName.replaceAll("()([A-Z])", "$1_$2");
+	            sb.append(fName.toUpperCase() + ", ");
+	        }
+	        sb.deleteCharAt(sb.length()-1); //borra la ultima ","
+	        sb.append(") VALUES (");
+	        //agrego los "?" correspondiente a la cantidad de campos
+	        for (int i = 0; i < campos.length; i++) {
+	        	sb.append("?,");
+			}
+	        sb.deleteCharAt(sb.length()-1); //borra la ultima ","
+	        sb.append(")");
+	    } catch (Exception e) {
+	        e.printStackTrace();
+	    }
+
+	    return sb.toString(); //devuelvo la consulta
 	}
 }
