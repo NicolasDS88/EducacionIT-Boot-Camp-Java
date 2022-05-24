@@ -120,7 +120,7 @@ public class ArticuloDaoMysqlImpl extends JDBCBaseDao<Articulo> implements Artic
 		return "(TITULO, CODIGO, PRECIO, CATEGORIAS_ID, MARCAS_ID, FECHA_CREACION, STOCK) VALUES (?,?,?,?,?,?,?)";
 	}
 	
-	@Override
+	/*@Override
 	public String getSaveSQL2(Articulo entity) {		
 		StringBuilder sb = new StringBuilder();		
 	    Class<Articulo> thisClass = null;
@@ -128,6 +128,7 @@ public class ArticuloDaoMysqlImpl extends JDBCBaseDao<Articulo> implements Artic
 	    	Field[] campos = thisClass.getDeclaredFields();
 	        sb.append("( ");
 	        for(Field f : campos){
+	        	f.setAccessible(true);
 	            String fName = f.getName();//tengo que agregar el "_" em la primera mayuscula
 	            fName.replaceAll("()([A-Z])", "$1_$2");
 	            sb.append(fName.toUpperCase() + ", ");
@@ -145,5 +146,5 @@ public class ArticuloDaoMysqlImpl extends JDBCBaseDao<Articulo> implements Artic
 	    }
 
 	    return sb.toString(); //devuelvo la consulta
-	}
+	}*/
 }

@@ -1,5 +1,6 @@
 package ar.com.educacionit.daos.impl;
 
+import java.lang.reflect.Field;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -13,6 +14,7 @@ import ar.com.educacionit.daos.GenericDao;
 import ar.com.educacionit.daos.db.AdministradorDeConexiones;
 import ar.com.educacionit.daos.db.exceptions.DuplicatedException;
 import ar.com.educacionit.daos.db.exceptions.GenericException;
+import ar.com.educacionit.domain.Articulo;
 import ar.com.educacionit.domain.Entity;
 
 public abstract class JDBCBaseDao<T extends Entity> implements GenericDao<T>{
@@ -28,11 +30,41 @@ public abstract class JDBCBaseDao<T extends Entity> implements GenericDao<T>{
 	
 	//cada impl debe especificar como es su sql insert
 	public abstract String getSaveSQL();
+	
 	public abstract void saveData(T entity,PreparedStatement pst) throws SQLException;	
 	public abstract String getUpdateSQL(T entity);
 	public abstract void updateData(T entity, PreparedStatement st) throws SQLException;
-	public abstract String getSaveSQL2(T entity);
+	//cada hijo convierte el ResultSet a la entidad que le corresponde 
+	public abstract T fromResultSetToEntity(ResultSet rs) throws SQLException;
+	
+	public String getSaveSQL2(T entity) {				
+			StringBuilder sb = new StringBuilder();		
+			try {  
+		    	Field[] campos = entity.getClass().getDeclaredFields();
+		        sb.append("( ");
+		        for(Field f : campos){
+		        	f.setAccessible(true);
+		            String fName = f.getName();//tengo que agregar el "_" em la primera mayuscula		            
+		            fName=fName.replaceAll("(.)(\\p{Lu})", "$1_$2");
+		            //System.err.println(fName);
+		            sb.append(fName.toUpperCase() + ",");
+		        }
+		        sb.deleteCharAt(sb.length()-1); //borra la ultima ","
+		        sb.append(") VALUES (");
+		        //agrego los "?" correspondiente a la cantidad de campos
+		        for (int i = 0; i < campos.length; i++) {
+		        	sb.append("?,");
+				}
+		        sb.deleteCharAt(sb.length()-1); //borra la ultima ","
+		        sb.append(")");
+		    } catch (Exception e) {
+		        e.printStackTrace();
+		    }
 
+		    return sb.toString(); //devuelvo la consulta
+		}
+	
+	
 	public void update(T entity) throws GenericException {		
 		String sql = "UPDATE " + this.tabla + " SET " +this.getUpdateSQL(entity) + " where id=?";		
 		//contar cuantos ?
@@ -171,7 +203,6 @@ public abstract class JDBCBaseDao<T extends Entity> implements GenericDao<T>{
 		}
 	}
 	
-	//cada hijo convierte el ResultSet a la entidad que le corresponde 
-	public abstract T fromResultSetToEntity(ResultSet rs) throws SQLException;
+
 		
 }
