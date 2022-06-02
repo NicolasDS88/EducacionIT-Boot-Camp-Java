@@ -9,15 +9,10 @@ import ar.com.educacionit.services.GenericService;
 import ar.com.educacionit.services.exceptions.ServiceException;
 
 public abstract class AbstractBaseService<T> implements GenericService<T>{
-	
-	protected GenericDao<T> dao;	
+
+	protected GenericDao<T> dao;
 	
 	public AbstractBaseService(GenericDao<T> dao) {
-	//ACA SEGUN QUE BASE DE DATOS MANEJE EJECUTO UNO U OTRA BD		
-		/*if(mysql){
-			super(new ArticuloDaoMysqlImpl());
-		} else {super(new ArticuloMongoDbImpl());}
-		*/		
 		this.dao = dao;
 	}
 	
@@ -30,7 +25,7 @@ public abstract class AbstractBaseService<T> implements GenericService<T>{
 		}
 	}
 	
-	//no es mas un deleteArticulo, ahora es depende de quien lo use
+
 	@Override
 	public void delete(Long id) throws ServiceException {
 		try {
