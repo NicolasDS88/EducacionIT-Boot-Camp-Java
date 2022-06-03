@@ -3,6 +3,7 @@ package ar.com.educacionit.daos;
 import java.lang.reflect.Field;
 import java.util.Date;
 
+import ar.com.educacionit.daos.db.exceptions.GenericException;
 import ar.com.educacionit.daos.impl.ArticuloDaoMysqlImpl;
 import ar.com.educacionit.daos.impl.CategoriasDaoMysqlImpl;
 import ar.com.educacionit.domain.Articulo;
@@ -11,7 +12,7 @@ import ar.com.educacionit.domain.Orden;
 
 public class ReflectionApiMain {
 
-	public static void main(String[] args) throws IllegalArgumentException, IllegalAccessException {
+	public static void main(String[] args) throws IllegalArgumentException, IllegalAccessException, GenericException {
 
 		Articulo art = new Articulo(1l, "titulo", "codigo", new Date(), 1500D, 1l, 1l, 1l);
 		Categorias cat = new Categorias(1L, "desc 112", 1L);
