@@ -9,14 +9,6 @@ import ar.com.educacionit.services.exceptions.ServiceException;
 public class ArticulosServiceImpl extends AbstractBaseService<Articulo> implements ArticulosService {
 
 	public ArticulosServiceImpl() {
-	//ACA SEGUN QUE BASE DE DATOS MANEJE EJECUTO UNO U OTRA BD
-		
-		/* String motorDB= System.getenv("TIPO_DB") //variable de entorno, la puedo definir en el cloud
-		 * super(if(motorDB.equals("mysql"){
-			super(new ArticuloDaoMysqlImpl());
-		} else {super(new ArticuloMongoDbImpl());})
-		*/
-		
 		super(new ArticuloDaoMysqlImpl());
 	}
 	
