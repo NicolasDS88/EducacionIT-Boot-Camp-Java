@@ -1,6 +1,5 @@
 package ar.com.educacionit.daos;
 
-import java.lang.reflect.Field;
 import java.util.Date;
 
 import ar.com.educacionit.daos.db.exceptions.GenericException;
