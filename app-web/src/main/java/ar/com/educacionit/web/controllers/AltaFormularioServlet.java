@@ -14,7 +14,7 @@ import ar.com.educacionit.services.ArticulosService;
 import ar.com.educacionit.services.exceptions.ServiceException;
 import ar.com.educacionit.services.impl.ArticulosServiceImpl;
 
-@WebServlet("/controller/AltaFormularioServlet")
+@WebServlet("/controllers/AltaFormularioServlet")
 public class AltaFormularioServlet extends HttpServlet {
 
 	private static final long serialVersionUID = -3953577187787582717L;

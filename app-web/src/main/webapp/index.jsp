@@ -17,7 +17,7 @@
 			        <section>
 			        	<!-- objeto implicito -->
 			        				  <!--/app-web-->
-			         	<form action="<%=request.getContextPath()%>/controller/AltaFormularioServlet" method="POST">
+			         	<form action="<%=request.getContextPath()%>/controllers/AltaFormularioServlet" method="POST">
 			        		<label for="fecha" class="form-label">Fecha</label>
 			        		<input type="date" name="fecha" class="form-control">
 			        		<button class="btn btn-info mt-2">
